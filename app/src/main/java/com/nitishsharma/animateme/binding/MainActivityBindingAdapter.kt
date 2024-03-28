@@ -1,9 +1,17 @@
 package com.nitishsharma.animateme.binding
 
+import android.view.View
+import android.view.animation.Animation
+import android.view.animation.LinearInterpolator
+import android.view.animation.RotateAnimation
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.nitishsharma.animateme.R
+
 
 @BindingAdapter("setTitleText")
 fun setTitleText(view: AppCompatTextView, page: Int) {
@@ -30,23 +38,40 @@ fun updateBackgroundWithAnimation(view: ConstraintLayout, page: Int) {
         1 -> view.setBackgroundResource(R.drawable.gradient_second)
         2 -> view.setBackgroundResource(R.drawable.gradient_third)
     }
-//    val fadeOutBackground = ObjectAnimator.ofFloat(view, View.ALPHA, 1f, 0f)
-//    fadeOutBackground.duration = 50
-//    fadeOutBackground.addUpdateListener { animation ->
-//        if (animation.animatedFraction >= 0.5 && view.alpha != 0f) {
-//            when (page) {
-//                0 -> view.setBackgroundResource(R.drawable.gradient_first)
-//                1 -> view.setBackgroundResource(R.drawable.gradient_second)
-//                2 -> view.setBackgroundResource(R.drawable.gradient_third)
-//            }
-//        }
-//    }
-//
-//    val fadeInBackground = ObjectAnimator.ofFloat(view, View.ALPHA, 0f, 1f)
-//    fadeInBackground.duration = 50
-//
-//    val animatorSet = AnimatorSet()
-//    animatorSet.playSequentially(fadeOutBackground, fadeInBackground)
-//    animatorSet.start()
 }
 
+@BindingAdapter("loadWebpImageAndStartAnimation")
+fun loadWebpImageAndStartAnimation(view: AppCompatImageView, page: Int) {
+    when (page) {
+        0 -> {
+            view.visibility = View.GONE
+            view.clearAnimation()
+        }
+
+        else -> {
+            view.visibility = View.VISIBLE
+            animateImage(view)
+        }
+    }
+}
+
+fun animateImage(view: AppCompatImageView) {
+    Glide.with(view.context)
+        .load(R.drawable.shiner)
+        .transition(DrawableTransitionOptions.withCrossFade())
+        .into(view)
+
+    val rotateAnimation = RotateAnimation(
+        0f,
+        359f,
+        Animation.RELATIVE_TO_SELF,
+        0.5f,
+        Animation.RELATIVE_TO_SELF,
+        0.5f
+    )
+    rotateAnimation.duration = 10000
+    rotateAnimation.repeatCount = Animation.INFINITE
+    rotateAnimation.interpolator = LinearInterpolator()
+
+    view.startAnimation(rotateAnimation)
+}

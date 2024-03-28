@@ -35,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.65" />
+            app:layout_constraintGuide_percent="0.70" />
 
         <com.nitishsharma.animateme.arctext.TextArc
             android:id="@+id/arcText"
@@ -74,6 +74,7 @@
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/animation_view2"
+            android:rotation="90"
             android:layout_width="@dimen/dimen_100"
             android:layout_height="@dimen/dimen_100"
             app:layout_constraintBottom_toBottomOf="@id/guideline2"
@@ -88,10 +89,10 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:rotation="90"
-            android:src="@drawable/shiner"
-            android:visibility="@{viewModel.pageNumber.peekContent() == 0 ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="@id/guideline2"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:loadWebpImageAndStartAnimation="@{viewModel.pageNumber.peekContent()}"
+            tools:src="@drawable/shiner" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/thonImg"
@@ -108,6 +109,7 @@
             android:id="@+id/middleCv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/buttonNxt"
             app:layout_constraintTop_toBottomOf="@id/guideline2">
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -169,7 +171,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/middleCv"
             app:layout_constraintVertical_bias="1" />
 
         <androidx.viewpager2.widget.ViewPager2
