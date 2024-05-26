@@ -55,6 +55,11 @@ fun loadWebpImageAndStartAnimation(view: AppCompatImageView, page: Int) {
     }
 }
 
+@BindingAdapter("animateShiner")
+fun animateShiner(view: AppCompatImageView, dummyText: String) {
+    animateImage(view)
+}
+
 fun animateImage(view: AppCompatImageView) {
     Glide.with(view.context)
         .load(R.drawable.shiner)
